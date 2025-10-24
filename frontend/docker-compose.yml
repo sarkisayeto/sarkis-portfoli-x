@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_BASE_URL=http://localhost:5000/api
+        - VITE_CLOUDINARY_CLOUD_NAME=dprxvnotk
+        - VITE_CLOUDINARY_UPLOAD_PRESET=portfolio_KissoTech
+        - VITE_WHATSAPP_NUMBER=+2290155963913
+        - VITE_WHATSAPP_MESSAGE=Bonjour, j'aimerais en savoir plus sur vos services. Merci !
+    container_name: portfolio-frontend
+    ports:
+      - "5173:3000"
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+
+networks:
+  portfolio-network:
+    driver: bridge

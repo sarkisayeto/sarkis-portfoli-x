@@ -1,0 +1,36 @@
+services:
+  mongo:
+    image: mongo:7-jammy
+    restart: unless-stopped
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    environment:
+      MONGO_INITDB_DATABASE: portfolio
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - portfolio-network
+  
+  app:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+    networks:
+      - portfolio-network
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+
+volumes:
+  mongo-data:
+
+networks:
+  portfolio-network:
+    driver: bridge

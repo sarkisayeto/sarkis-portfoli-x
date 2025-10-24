@@ -1,0 +1,8 @@
+{
+  "info": { "name": "Portfolio Backend", "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json" },
+  "item": [
+    { "name": "Get projects", "request": { "method": "GET", "header": [], "url": { "raw": "http://localhost:5000/api/projets", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api","projets"] } } },
+    { "name": "Create project (auth)", "request": { "method": "POST", "header": [ { "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{ \"title\": \"Mon projet\", \"description\": \"desc...\" }" }, "url": { "raw": "http://localhost:5000/api/projets", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api","projets"] } } },
+    { "name": "Contact (post)", "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{ \"name\": \"Sarkis\", \"email\": \"sarkis@example.com\", \"subject\": \"Test\", \"message\": \"Ceci est un test\" }" }, "url": { "raw": "http://localhost:5000/api/contact", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api","contact"] } } }
+  ]
+}
