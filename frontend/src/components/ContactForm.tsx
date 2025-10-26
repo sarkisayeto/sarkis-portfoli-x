@@ -60,8 +60,13 @@ const ContactForm = () => {
 
       toast.success('Message envoyé avec succès !');
       setFormData({ name: '', email: '', subject: '', message: '' });
-    } catch (error: any) {
-      toast.error(error?.message || error?.response?.data?.message || 'Erreur lors de l\'envoi du message');
+    } catch (err: unknown) {
+      let msg = "Erreur lors de l'envoi du message";
+      if (err && typeof err === 'object') {
+        const e = err as { message?: string; response?: { data?: { message?: string } } };
+        msg = e.response?.data?.message ?? e.message ?? msg;
+      }
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
