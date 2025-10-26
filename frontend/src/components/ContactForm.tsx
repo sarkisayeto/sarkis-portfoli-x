@@ -39,7 +39,7 @@ const ContactForm = () => {
     const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY as string | undefined;
 
     try {
-      // If EmailJS is configured, send via EmailJS
+      // If EmailJS is configured, send via EmailJS and save to backend in background
       if (serviceId && templateId && publicKey) {
         await emailjs.send(
           serviceId,
@@ -52,13 +52,14 @@ const ContactForm = () => {
           },
           { publicKey }
         );
+        // Fire-and-forget save to backend (optional: store message in DB)
+        postContact(formData).catch(() => {});
+        toast.success('Message envoyé avec succès !');
+      } else {
+        // No EmailJS configured: use backend only and wait for response
+        await postContact(formData);
+        toast.success('Message envoyé avec succès !');
       }
-
-      // Fire-and-forget save to backend (optional: store message in DB)
-      // We don't await to avoid blocking UX if API is slow
-      postContact(formData).catch(() => {});
-
-      toast.success('Message envoyé avec succès !');
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (err: unknown) {
       let msg = "Erreur lors de l'envoi du message";
