@@ -8,6 +8,8 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  // Avoid hanging requests when a platform is cold or unreachable
+  timeout: 15000,
 });
 
 // Request interceptor to add auth token

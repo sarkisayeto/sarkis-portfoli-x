@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import { ThemeToggle } from './ThemeToggle';
 
 const Header = () => {
   const location = useLocation();
@@ -10,6 +11,7 @@ const Header = () => {
   const navItems = [
     { name: 'Accueil', path: '/', hash: '' },
     { name: 'À propos', path: '/', hash: '#about' },
+    { name: 'Services', path: '/', hash: '#services' },
     { name: 'Projets', path: '/projets', hash: '' },
     { name: 'Contact', path: '/contact', hash: '' },
   ];
@@ -63,15 +65,19 @@ const Header = () => {
                 )}
               </Link>
             ))}
+            <ThemeToggle />
           </nav>
 
           {/* Mobile Menu Button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-foreground/80 hover:text-primary"
-          >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          <div className="md:hidden flex items-center gap-2">
+            <ThemeToggle />
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 text-foreground/80 hover:text-primary"
+            >
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}

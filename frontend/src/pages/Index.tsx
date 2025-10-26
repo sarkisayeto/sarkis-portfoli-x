@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
+import Services from '@/components/Services';
 import ProjectGrid from '@/components/ProjectGrid';
 import { Button } from '@/components/ui/button';
 import { useProjects } from '@/hooks/useProjects';
@@ -19,6 +20,7 @@ const Index = () => {
       <main className="pt-16">
         <Hero />
         <About />
+        <Services />
         
         {/* Projects Preview Section */}
         <section id="projects" className="py-20">
