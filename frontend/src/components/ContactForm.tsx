@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { postContact } from '@/lib/api';
+import emailjs from '@emailjs/browser';
 import { validateContactForm } from '@/lib/validators';
 
 const ContactForm = () => {
@@ -33,12 +34,34 @@ const ContactForm = () => {
     }
 
     setLoading(true);
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID as string | undefined;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string | undefined;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY as string | undefined;
+
     try {
-      await postContact(formData);
+      // If EmailJS is configured, send via EmailJS
+      if (serviceId && templateId && publicKey) {
+        await emailjs.send(
+          serviceId,
+          templateId,
+          {
+            from_name: formData.name,
+            from_email: formData.email,
+            subject: formData.subject,
+            message: formData.message,
+          },
+          { publicKey }
+        );
+      }
+
+      // Fire-and-forget save to backend (optional: store message in DB)
+      // We don't await to avoid blocking UX if API is slow
+      postContact(formData).catch(() => {});
+
       toast.success('Message envoyé avec succès !');
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Erreur lors de l\'envoi du message');
+      toast.error(error?.message || error?.response?.data?.message || 'Erreur lors de l\'envoi du message');
     } finally {
       setLoading(false);
     }

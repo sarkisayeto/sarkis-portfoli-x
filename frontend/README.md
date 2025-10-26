@@ -146,6 +146,26 @@ Pour activer l'upload d'images :
    - Format : JPG, PNG ou WEBP
    - Poids max : 5 MB (compression automatique)
 
+## ✉️ Envoi d'e-mails (EmailJS)
+
+Le formulaire de contact peut envoyer les e-mails côté client via EmailJS.
+Si les variables d'environnement suivantes sont définies, l'envoi passera par EmailJS et l'application enregistrera le message sur le backend en arrière-plan (fire-and-forget) :
+
+```env
+VITE_EMAILJS_SERVICE_ID=your_service_id
+VITE_EMAILJS_TEMPLATE_ID=your_template_id
+VITE_EMAILJS_PUBLIC_KEY=your_public_key
+```
+
+Étapes:
+- Créez un compte sur https://www.emailjs.com/
+- Ajoutez un service (Gmail, Outlook, SMTP, etc.)
+- Créez un template avec les champs: from_name, from_email, subject, message
+- Copiez les IDs/clé publique et renseignez-les dans les variables ci-dessus
+- Sur Vercel, ajoutez ces variables dans Project Settings > Environment Variables et redeployez
+
+Sans ces variables, le formulaire utilisera uniquement l'API backend (`POST /api/contact`).
+
 ## 🎯 Fonctionnalités
 
 ### Public
