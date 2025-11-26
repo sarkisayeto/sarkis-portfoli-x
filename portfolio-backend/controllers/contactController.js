@@ -3,20 +3,28 @@ const { sendContactCopy } = require('../services/mailer');
 
 
 async function postContact(req, res, next) {
-try {
-const { name, email, subject, message } = req.body;
-const saved = await MessageContact.create({ name, email, subject, message });
+	try {
+		const { name, email, subject, message } = req.body;
+		const saved = await MessageContact.create({ name, email, subject, message });
 
+		// Fire-and-forget email sending so the API responds fast even if SMTP is slow/unreachable
+		sendContactCopy({
+			toAdmin: process.env.ADMIN_EMAIL,
+			messageObj: { name, email, subject, message },
+		})
+			.then(() => {
+				// optional: log success
+				// console.log('Contact email sent');
+			})
+			.catch((mailErr) => {
+				// Log but do not fail the request
+				console.error('Contact email failed:', mailErr?.message || mailErr);
+			});
 
-try {
-await sendContactCopy({ toAdmin: process.env.ADMIN_EMAIL, messageObj: { name, email, subject, message } });
-} catch (mailErr) {
-return res.status(201).json({ success: true, message: 'Message enregistré, mais l’envoi de l’email a échoué.', data: saved, mailError: mailErr.message });
-}
-
-
-res.status(201).json({ success: true, message: 'Message reçu et envoyé à l’administrateur.', data: saved });
-} catch (err) { next(err); }
+		res.status(201).json({ success: true, message: 'Message reçu. Merci de nous avoir contactés.', data: saved });
+	} catch (err) {
+		next(err);
+	}
 }
 
 

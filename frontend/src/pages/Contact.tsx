@@ -94,7 +94,7 @@ const Contact = () => {
               >
                 <h3 className="font-semibold mb-2">Disponibilité</h3>
                 <p className="text-sm text-muted-foreground">
-                  Actuellement disponible pour de nouvelles opportunités et projets freelance.
+                  Actuellement disponible pour de nouvelles opportunités et projets freelance ou autres.
                 </p>
               </motion.div>
             </motion.div>
