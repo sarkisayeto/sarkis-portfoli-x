@@ -50,7 +50,7 @@ const Hero = () => {
               transition={{ duration: 3, repeat: Infinity }}
             />
             <img
-              src="/sarkis.jpg"
+              src="/sarkis.png"
               alt="Sarkis EKPINDA"
               className="relative w-32 h-32 md:w-48 md:h-48 rounded-full object-cover border-4 border-primary/30"
             />
