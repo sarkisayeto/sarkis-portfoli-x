@@ -108,8 +108,8 @@ const Services = () => {
         >
           {[
             { value: '3+', label: 'Années d\'expérience' },
-            { value: '20+', label: 'Projets réalisés' },
-            { value: '15+', label: 'Technologies maîtrisées' },
+            { value: '15+', label: 'Projets réalisés' },
+            { value: '10+', label: 'Technologies maîtrisées' },
             { value: '100%', label: 'Clients satisfaits' },
           ].map((stat, index) => (
             <div key={index} className="text-center">
