@@ -12,6 +12,9 @@ const limiter = require('./middlewares/rateLimiter');
 
 const app = express();
 
+// ✅ OBLIGATOIRE derrière DigitalOcean / proxy
+app.set('trust proxy', 1);
+
 app.use(helmet());
 app.use(express.json());
 app.use(morgan('dev'));
